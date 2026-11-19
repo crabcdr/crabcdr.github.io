@@ -461,6 +461,31 @@
     font-family:'Caveat',cursive;font-size:1.8rem;color:var(--green);
     text-align:right;margin-top:20px;padding-right:60px;
   }
+  .postit{
+    position:relative;
+    width:min(310px,88%);
+    margin:28px auto 6px;
+    padding:16px 18px 18px;
+    background:linear-gradient(180deg,#fffbdc 0%,#fff3a8 100%);
+    border-radius:4px;
+    transform:rotate(-2.2deg);
+    box-shadow:0 12px 24px rgba(150,120,60,.3), inset 0 -18px 22px -18px rgba(176,146,56,.55);
+    font-family:'Caveat','Segoe Script',cursive;
+    font-size:1.4rem;line-height:1.5;
+    color:#7a6428;text-align:center;
+  }
+  .postit::before{
+    content:"";position:absolute;top:-11px;left:50%;
+    transform:translateX(-50%) rotate(-1.5deg);
+    width:78px;height:22px;border-radius:2px;
+    background:rgba(255,255,255,.62);
+    box-shadow:0 1px 4px rgba(120,100,60,.18);
+  }
+  #finale.open .postit{animation:postitIn .55s 1.15s cubic-bezier(.2,1.5,.4,1) both}
+  @keyframes postitIn{
+    from{opacity:0;transform:rotate(-9deg) scale(.65)}
+    to{opacity:1;transform:rotate(-2.2deg) scale(1)}
+  }
   .seal{position:absolute;left:22px;bottom:26px;width:48px;transform:rotate(-10deg);filter:drop-shadow(0 6px 8px rgba(180,60,80,.3))}
   .letter .acts{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:26px}
   .letter .btn{margin-top:0;padding:14px 20px;font-size:.95rem;min-height:48px}
@@ -493,7 +518,7 @@
 
   /* ================= reduced motion ================= */
   @media (prefers-reduced-motion:reduce){
-    .petal,.envelope,.cloud,.sun,.mote,.sway,.wing,.bfly,.can,.can-hint,.tap-hint,.seal-btn{animation:none!important}
+    .petal,.envelope,.cloud,.sun,.mote,.sway,.wing,.bfly,.can,.can-hint,.tap-hint,.seal-btn,.postit{animation:none!important}
     .screen.active,.pop,.card,#finale.open .letter{animation:none!important}
     .bfly{display:none}
   }
@@ -669,6 +694,7 @@
     <p>Seçtiğin her çiçek aynı şeyi söylüyor: Benim olduğun için çok ama çok mutluyum. Sıradan günleri bütün bir bahçeye çevirdiğin için teşekkür ederim.</p>
     <p>Seni bunların hepsinden daha çok seviyorum. 💗</p>
     <div class="sign">— Sinan</div>
+    <div class="postit">Bugün aramız biraz bozuk olsa bile… bu bahçe, bu not, bu kalp hep senin için burada. Küçük tartışmalar büyük sevgiyi değiştiremez. 💗</div>
     <svg class="seal" viewBox="0 0 80 80" aria-hidden="true">
       <circle cx="40" cy="40" r="34" fill="#d9455f"/>
       <circle cx="40" cy="40" r="27" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"/>
