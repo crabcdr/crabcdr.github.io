@@ -1,10 +1,190 @@
 <!doctype html>
-<html lang="en">
+<html lang="tr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Home</title>
+<meta name="theme-color" content="#17121f">
+<meta name="description" content="Farklı biçimlerde büyüyen iki küçük bahçe.">
+<title>İki Küçük Bahçe</title>
+<style>
+  :root {
+    color-scheme: dark;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    color: #f5ebed;
+    background: #17121f;
+  }
+  * { box-sizing: border-box; }
+  body {
+    min-height: 100vh;
+    min-height: 100dvh;
+    margin: 0;
+    padding: 48px 24px;
+    display: grid;
+    place-items: center;
+    background:
+      radial-gradient(ellipse at 18% 20%, rgba(119, 66, 131, .2), transparent 34%),
+      radial-gradient(ellipse at 85% 85%, rgba(61, 136, 105, .17), transparent 36%),
+      #17121f;
+  }
+  main { width: min(100%, 980px); }
+  header { margin: 0 auto 34px; text-align: center; }
+  .eyebrow {
+    margin: 0 0 12px;
+    color: #c9a7ce;
+    font: 600 .72rem/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+  }
+  h1 {
+    margin: 0;
+    color: #fff3e7;
+    font: 500 clamp(2.4rem, 8vw, 4.5rem)/1.05 Georgia, "Times New Roman", serif;
+    letter-spacing: -.045em;
+  }
+  .lead {
+    max-width: 38ch;
+    margin: 16px auto 0;
+    color: #c1b2c5;
+    font-size: clamp(.95rem, 2.5vw, 1.08rem);
+    line-height: 1.65;
+  }
+  .gardens {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+  .garden {
+    min-height: 340px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, .13);
+    border-radius: 18px;
+    color: inherit;
+    text-decoration: none;
+    transition: transform .24s ease, border-color .24s ease, box-shadow .24s ease;
+  }
+  .garden:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255, 206, 214, .55);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, .28);
+  }
+  .garden:focus-visible {
+    outline: 3px solid #ffd28e;
+    outline-offset: 4px;
+  }
+  .ascii {
+    background:
+      radial-gradient(ellipse at 50% 70%, rgba(185, 90, 150, .24), transparent 46%),
+      linear-gradient(145deg, #29213b, #14221f);
+  }
+  .storybook {
+    background:
+      radial-gradient(ellipse at 28% 22%, rgba(255, 243, 217, .8), transparent 8%),
+      linear-gradient(160deg, #aca5df 0%, #edb7cf 52%, #ffdbb8 100%);
+    color: #684f69;
+  }
+  .preview {
+    min-height: 194px;
+    display: grid;
+    place-items: center;
+    padding: 22px;
+    font: 500 clamp(.7rem, 1.5vw, .95rem)/1.55 ui-monospace, SFMono-Regular, Menlo, monospace;
+    text-align: center;
+    white-space: pre;
+  }
+  .ascii .preview {
+    color: #ffa9d0;
+    text-shadow: 0 0 16px rgba(255, 121, 190, .65);
+  }
+  .storybook .preview {
+    color: #fff9eb;
+    font-size: clamp(2.5rem, 7vw, 4.5rem);
+    text-shadow: 0 5px 18px rgba(137, 83, 134, .25);
+  }
+  .copy { padding: 4px 26px 26px; }
+  .tag {
+    margin: 0 0 9px;
+    color: #bd9bca;
+    font: 600 .67rem/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+  }
+  .storybook .tag { color: #8d6881; }
+  h2 {
+    margin: 0;
+    font: 500 1.55rem/1.2 Georgia, "Times New Roman", serif;
+  }
+  .description {
+    min-height: 3em;
+    margin: 10px 0 20px;
+    color: #c8bdce;
+    font-size: .9rem;
+    line-height: 1.6;
+  }
+  .storybook .description { color: #755e75; }
+  .action {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    color: #ffd28e;
+    font-size: .84rem;
+    font-weight: 650;
+  }
+  .storybook .action { color: #744f70; }
+  footer {
+    margin-top: 30px;
+    color: #827588;
+    font: .7rem/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+    text-align: center;
+  }
+  @media (max-width: 650px) {
+    body { padding: 36px 18px; }
+    header { margin-bottom: 26px; }
+    .gardens { grid-template-columns: 1fr; gap: 15px; }
+    .garden { min-height: 0; }
+    .preview { min-height: 160px; }
+    .copy { padding: 2px 22px 23px; }
+    .description { min-height: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+  }
+</style>
 </head>
 <body>
+<main>
+  <header>
+    <p class="eyebrow">küçük bir gezinti yeri</p>
+    <h1>İki küçük bahçe</h1>
+    <p class="lead">Biri ışık ve karakterlerden, diğeri bir masal kitabından. Bir yol seç, biraz oyalan.</p>
+  </header>
+  <nav class="gardens" aria-label="Bir bahçe seç">
+    <a class="garden ascii" href="ascii-garden/">
+      <div class="preview" aria-hidden="true">       . * .       . * .
+         \|/           \|/
+      ---(@)---     ---(@)---
+          |      .      |
+        __|__   / \   __|__
+      ~~~~~~~~~~~~~~~~~~~~~~~~~</div>
+      <div class="copy">
+        <p class="tag">canlı 3B ASCII</p>
+        <h2>Büyüyen bahçe</h2>
+        <p class="description">Bir tohumun renkli, dönen çiçeklerle dolu bir dünyaya dönüşmesini izle.</p>
+        <span class="action">Bahçeye gir <span aria-hidden="true">-&gt;</span></span>
+      </div>
+    </a>
+    <a class="garden storybook" href="little-garden/">
+      <div class="preview" aria-hidden="true">✿</div>
+      <div class="copy">
+        <p class="tag">masal bahçesi</p>
+        <h2>Küçük bir bahçe</h2>
+        <p class="description">Keşfedilmeyi bekleyen, düş gibi küçük bir bahçe.</p>
+        <span class="action">Bahçeyi ziyaret et <span aria-hidden="true">-&gt;</span></span>
+      </div>
+    </a>
+  </nav>
+  <footer>özenle büyütüldü</footer>
+</main>
 </body>
 </html>

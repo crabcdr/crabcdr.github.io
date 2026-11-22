@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#100e1d">
+<title>Sılam için küçük bir bahçe</title>
+<style>
+  :root {
+    color-scheme: dark;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    background: #100e1d;
+    color: #eee5ef;
+  }
+  * { box-sizing: border-box; }
+  body {
+    min-height: 100vh;
+    min-height: 100dvh;
+    margin: 0;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    background:
+      radial-gradient(ellipse at 50% 48%, rgba(115, 59, 113, .32), transparent 50%),
+      radial-gradient(ellipse at 16% 85%, rgba(52, 124, 95, .18), transparent 36%),
+      #100e1d;
+  }
+  main {
+    width: min(100%, 680px);
+    text-align: center;
+  }
+  h1 {
+    margin: 0;
+    color: #fff0dc;
+    font-size: clamp(1.2rem, 4vw, 1.55rem);
+    font-weight: 400;
+    letter-spacing: .06em;
+  }
+  .intro {
+    margin: 12px 0 34px;
+    color: #b7a5c4;
+    font-size: .85rem;
+  }
+  .garden {
+    min-height: 330px;
+    display: grid;
+    place-items: center;
+    padding: 30px 12px;
+    overflow: hidden;
+    border: 1px solid rgba(208, 155, 213, .24);
+    border-radius: 12px;
+    background:
+      radial-gradient(ellipse at 50% 76%, rgba(195, 115, 110, .13), transparent 45%),
+      linear-gradient(160deg, rgba(42, 34, 57, .92), rgba(25, 34, 39, .94));
+    box-shadow: 0 24px 80px rgba(0, 0, 0, .28), inset 0 1px rgba(255, 255, 255, .04);
+    transition: border-color .8s ease, box-shadow .8s ease;
+  }
+  .garden.bloom {
+    border-color: rgba(255, 171, 190, .56);
+    box-shadow: 0 24px 90px rgba(176, 90, 139, .2), inset 0 1px rgba(255, 255, 255, .08);
+  }
+  pre {
+    margin: 0;
+    font-size: clamp(8px, 2.45vw, 15px);
+    line-height: 1.55;
+    text-align: left;
+    text-shadow: 0 0 16px currentColor;
+  }
+  .sky { color: #f6d17b; }
+  .seed { color: #f4c27a; }
+  .stem { color: #8edba3; }
+  .leaf { color: #62d6a0; }
+  .bud { color: #e9a1d0; }
+  .petal { color: #ff9fbd; }
+  .ground { color: #bd8a68; }
+  .garden.bloom .petal { animation: petalGlow 2.2s ease-in-out infinite alternate; }
+  @keyframes petalGlow {
+    from { color: #ff9fbd; text-shadow: 0 0 10px rgba(255, 159, 189, .55); }
+    to { color: #ffd18b; text-shadow: 0 0 22px rgba(255, 209, 139, .75); }
+  }
+  #status {
+    min-height: 1.4em;
+    margin: 12px 0 22px;
+    color: #c2aecb;
+    font-size: .78rem;
+    letter-spacing: .04em;
+  }
+  button {
+    border: 1px solid rgba(240, 176, 204, .45);
+    border-radius: 999px;
+    padding: 11px 20px;
+    background: linear-gradient(135deg, rgba(160, 88, 146, .35), rgba(78, 123, 101, .35));
+    color: #fff0dc;
+    font: inherit;
+    font-size: .8rem;
+    cursor: pointer;
+    transition: transform .18s ease, border-color .18s ease, background .18s ease;
+  }
+  button:hover, button:focus-visible {
+    border-color: #ffb8cb;
+    outline: none;
+    background: linear-gradient(135deg, rgba(194, 109, 167, .5), rgba(94, 153, 121, .5));
+    transform: translateY(-2px);
+  }
+  .signature { margin-top: 24px; color: #786c88; font-size: .68rem; letter-spacing: .12em; }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { scroll-behavior: auto !important; }
+    *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+  }
+  body {
+    background:
+      radial-gradient(ellipse at 50% 45%, rgba(119, 68, 148, .28), transparent 58%),
+      radial-gradient(ellipse at 18% 82%, rgba(38, 155, 117, .16), transparent 38%),
+      #100e1d;
+  }
+  main { width: min(100%, 1080px); }
+  h1 { font-size: clamp(1.35rem, 4vw, 2rem); }
+  .intro { margin-bottom: 22px; }
+  .garden {
+    width: 100%;
+    height: min(66vh, 640px);
+    min-height: 390px;
+    padding: 0;
+    border-color: rgba(208, 155, 213, .3);
+    background:
+      radial-gradient(ellipse at 50% 70%, rgba(206, 93, 154, .15), transparent 44%),
+      radial-gradient(ellipse at 50% 100%, rgba(56, 154, 111, .14), transparent 45%),
+      linear-gradient(160deg, rgba(33, 27, 49, .96), rgba(15, 27, 34, .98));
+    box-shadow: 0 24px 90px rgba(0, 0, 0, .35), inset 0 1px rgba(255, 255, 255, .06);
+  }
+  canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    cursor: grab;
+    touch-action: none;
+  }
+  canvas:active { cursor: grabbing; }
+  #status { margin: 16px 0; color: #d7b6dc; }
+  button { padding: 12px 24px; }
+  @media (max-width: 600px) {
+    body { padding: 14px; }
+    .garden { height: min(62vh, 560px); min-height: 360px; }
+    .intro { margin-bottom: 16px; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <h1>Sılam için büyüyen küçük bir dünya</h1>
+  <p class="intro">Karakter karakter büyüyen, canlı bir 3B bahçe</p>
+  <section class="garden" aria-label="Renkli, dönen üç boyutlu ASCII bahçesi">
+    <canvas id="art" role="img" aria-label="Tohumdan filizlenen, renkli çiçeklerle dolu dönen bir bahçe">
+      Tohumdan renkli ASCII çiçekleriyle dolu bir bahçe büyüyor.
+    </canvas>
+  </section>
+  <p id="status" role="status" aria-live="polite"></p>
+  <button id="grow" type="button">Baştan büyüt</button>
+  <p class="signature">DÖNDÜRMEK İÇİN SÜRÜKLE &nbsp; / &nbsp; ÇİÇEKLERİ İZLE</p>
+</main>
+<script>
+  const canvas = document.querySelector("#art");
+  const context = canvas.getContext("2d");
+  const status = document.querySelector("#status");
+  const button = document.querySelector("#grow");
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const flowers = [
+    { x: -2.8, z: -.7, height: 3.75, hue: 344 },
+    { x: -1.4, z: .55, height: 5.05, hue: 278 },
+    { x: 0, z: 1.15, height: 5.85, hue: 42 },
+    { x: 1.4, z: .35, height: 4.9, hue: 188 },
+    { x: 2.8, z: -.72, height: 3.8, hue: 20 }
+  ];
+  const palette = {
+    petal: [".", ":", "+", "*", "@"],
+    center: [".", ":", "o", "O", "@"],
+    leaf: [".", ":", ";", "v", "V"],
+    stem: [".", ":", "|", "!", "|"],
+    soil: [".", ":", ";", "~", "="],
+    star: [".", ":", "+", "*", "+"]
+  };
+  let width = 0;
+  let height = 0;
+  let fontSize = 10;
+  let cellWidth = 6;
+  let lineHeight = 14;
+  let columns = 0;
+  let rows = 0;
+  let offsetX = 0;
+  let offsetY = 0;
+  let depths = new Float32Array(0);
+  let glyphs = [];
+  let colors = [];
+  let startedAt = performance.now();
+  let userOrbit = 0;
+  let dragX = null;
+  let frame = 0;
+  let lastFrame = 0;
+
+  if (!context) {
+    status.textContent = "Tarayıcın ASCII bahçesini görüntüleyemiyor.";
+    button.disabled = true;
+  } else {
+    context.textBaseline = "top";
+    context.textAlign = "left";
+  }
+
+  function resize() {
+    if (!context) return;
+    const bounds = canvas.getBoundingClientRect();
+    const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(bounds.width * pixelRatio);
+    canvas.height = Math.round(bounds.height * pixelRatio);
+    context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+    width = bounds.width;
+    height = bounds.height;
+    fontSize = width < 600 ? 11 : 13;
+    context.font = `${fontSize}px "SFMono-Regular", Consolas, monospace`;
+    cellWidth = context.measureText("M").width;
+    lineHeight = fontSize * 1.42;
+    columns = Math.min(140, Math.floor(width / cellWidth));
+    rows = Math.floor(height / lineHeight);
+    offsetX = (width - columns * cellWidth) / 2;
+    offsetY = (height - rows * lineHeight) / 2;
+    depths = new Float32Array(columns * rows);
+    glyphs = new Array(columns * rows);
+    colors = new Array(columns * rows);
+  }
+
+  function clamp(value, min = 0, max = 1) {
+    return Math.max(min, Math.min(max, value));
+  }
+
+  function smooth(value) {
+    const t = clamp(value);
+    return t * t * (3 - 2 * t);
+  }
+
+  function normalize(vector) {
+    const length = Math.hypot(...vector) || 1;
+    return vector.map(value => value / length);
+  }
+
+  function cross(a, b) {
+    return [
+      a[1] * b[2] - a[2] * b[1],
+      a[2] * b[0] - a[0] * b[2],
+      a[0] * b[1] - a[1] * b[0]
+    ];
+  }
+
+  function plot(point, normal, hue, saturation, lightness, kind, orbit) {
+    const cosine = Math.cos(orbit);
+    const sine = Math.sin(orbit);
+    const viewX = point[0] * cosine + point[2] * sine;
+    const viewZ = -point[0] * sine + point[2] * cosine;
+    const distance = 12.5 - viewZ;
+    if (distance <= .5) return;
+
+    const focal = Math.min(width * 1.05, height * 1.7);
+    const centerX = offsetX + columns * cellWidth / 2;
+    const baseline = offsetY + rows * lineHeight * .87;
+    const screenX = centerX + viewX * focal / distance;
+    const screenY = baseline - point[1] * focal / distance;
+    const column = Math.floor((screenX - offsetX) / cellWidth);
+    const row = Math.floor((screenY - offsetY) / lineHeight);
+    if (column < 0 || column >= columns || row < 0 || row >= rows) return;
+
+    const index = row * columns + column;
+    if (distance >= depths[index]) return;
+    depths[index] = distance;
+
+    const sun = normalize([-.35, .85, .55]);
+    const diffuse = Math.max(0, normal[0] * sun[0] + normal[1] * sun[1] + normal[2] * sun[2]);
+    const brightness = clamp(.68 + diffuse * .48, .62, 1.12);
+    const shades = palette[kind];
+    glyphs[index] = shades[Math.min(shades.length - 1, Math.floor(brightness * shades.length))];
+    colors[index] = `hsl(${hue} ${saturation}% ${Math.round(lightness * brightness)}%)`;
+  }
+
+  function surface(center, basis, radii, hue, kind, orbit, saturation = 80, lightness = 72, latSteps = 7, lonSteps = 16) {
+    for (let latIndex = 0; latIndex <= latSteps; latIndex += 1) {
+      const latitude = -Math.PI / 2 + Math.PI * latIndex / latSteps;
+      const ring = Math.cos(latitude);
+      const vertical = Math.sin(latitude);
+      for (let lonIndex = 0; lonIndex < lonSteps; lonIndex += 1) {
+        const longitude = Math.PI * 2 * lonIndex / lonSteps;
+        const local = [ring * Math.cos(longitude), ring * Math.sin(longitude), vertical];
+        const point = center.map((value, axis) =>
+          value + basis.reduce((sum, direction, dimension) => sum + direction[axis] * local[dimension] * radii[dimension], 0)
+        );
+        const normal = normalize(basis.reduce((result, direction, dimension) => {
+          direction.forEach((value, axis) => { result[axis] += value * local[dimension] / radii[dimension]; });
+          return result;
+        }, [0, 0, 0]));
+        plot(point, normal, hue, saturation, lightness, kind, orbit);
+      }
+    }
+  }
+
+  function tubePath(path, radius, hue, orbit) {
+    for (let index = 0; index < path.length; index += 1) {
+      const previous = path[Math.max(0, index - 1)];
+      const next = path[Math.min(path.length - 1, index + 1)];
+      const tangent = normalize(next.map((value, axis) => value - previous[axis]));
+      const reference = Math.abs(tangent[1]) > .9 ? [0, 0, 1] : [0, 1, 0];
+      const axisA = normalize(cross(tangent, reference));
+      const axisB = normalize(cross(tangent, axisA));
+      for (let slice = 0; slice < 8; slice += 1) {
+        const angle = Math.PI * 2 * slice / 8;
+        const normal = axisA.map((value, axis) => value * Math.cos(angle) + axisB[axis] * Math.sin(angle));
+        const point = path[index].map((value, axis) => value + normal[axis] * radius);
+        plot(point, normal, hue, 58, 76, "stem", orbit);
+      }
+    }
+  }
+
+  function drawGround(orbit) {
+    for (let x = -4; x <= 4; x += .16) {
+      for (let z = -2.1; z <= 2.1; z += .25) {
+        const speckle = Math.sin(x * 13 + z * 7);
+        plot([x, .02 + speckle * .008, z], [0, 1, 0], 27 + speckle * 8, 42, 48, "soil", orbit);
+      }
+    }
+    const corners = [
+      [-4, .04, -2.1], [4, .04, -2.1],
+      [4, .04, 2.1], [-4, .04, 2.1], [-4, .04, -2.1]
+    ];
+    for (let edge = 0; edge < corners.length - 1; edge += 1) {
+      const start = corners[edge];
+      const end = corners[edge + 1];
+      const count = 70;
+      const path = Array.from({ length: count + 1 }, (_, step) =>
+        start.map((value, axis) => value + (end[axis] - value) * step / count)
+      );
+      tubePath(path, .035, 30, orbit);
+    }
+  }
+
+  function drawFlower(flower, index, growth, time, orbit) {
+    const plantGrowth = smooth((growth - .07) / .86);
+    if (plantGrowth <= 0) return;
+    const sway = Math.sin(time * 1.2 + index * 1.7) * .1;
+    const base = [flower.x * .27, .08, flower.z];
+    const stemHeight = flower.height * plantGrowth;
+    const tip = [flower.x * .82 + sway, stemHeight, flower.z * .65];
+    const segments = Math.max(2, Math.ceil(stemHeight / .12));
+    const path = Array.from({ length: segments + 1 }, (_, step) => {
+      const t = step / segments;
+      return [
+        base[0] + (tip[0] - base[0]) * t + Math.sin(t * Math.PI) * sway,
+        base[1] + (tip[1] - base[1]) * t,
+        base[2] + (tip[2] - base[2]) * t
+      ];
+    });
+    tubePath(path, .045, 135, orbit);
+
+    for (let leafIndex = 0; leafIndex < 4; leafIndex += 1) {
+      const position = .24 + leafIndex * .16;
+      const leafSize = smooth((plantGrowth - position) / .14);
+      if (leafSize <= .02) continue;
+      const side = (leafIndex % 2 === 0 ? -1 : 1) * (index % 2 === 0 ? 1 : -1);
+      const along = Math.floor(position * segments);
+      const stem = path[Math.min(along, path.length - 1)];
+      const direction = normalize([side * .88, .37, Math.sin(index + leafIndex) * .38]);
+      const across = normalize(cross([0, 0, 1], direction));
+      const depth = normalize(cross(direction, across));
+      const center = stem.map((value, axis) => value + direction[axis] * .32 * leafSize);
+      surface(center, [direction, across, depth], [.48 * leafSize, .22 * leafSize, .055 * leafSize], 128 + leafIndex * 12, "leaf", orbit, 70, 76, 5, 12);
+      surface(center.map((value, axis) => value + direction[axis] * .18 * leafSize), [direction, across, depth], [.25 * leafSize, .014 * leafSize, .012 * leafSize], 105, "leaf", orbit, 58, 85, 2, 8);
+    }
+
+    const bud = smooth((growth - .57 - index * .018) / .31);
+    if (bud <= .01) return;
+    const flowerCenter = [tip[0], tip[1] + .04, tip[2]];
+    const spin = time * .12 + index * .4;
+    const petalBasisDepth = [0, 0, 1];
+    for (let petalIndex = 0; petalIndex < 10; petalIndex += 1) {
+      const angle = Math.PI * 2 * petalIndex / 10 + spin;
+      const radial = [Math.cos(angle), Math.sin(angle), 0];
+      const tangent = [-Math.sin(angle), Math.cos(angle), 0];
+      const center = [
+        flowerCenter[0] + radial[0] * .34 * bud,
+        flowerCenter[1] + radial[1] * .34 * bud,
+        flowerCenter[2]
+      ];
+      surface(center, [radial, tangent, petalBasisDepth], [.38 * bud, .19 * bud, .085 * bud], flower.hue + petalIndex * 2, "petal", orbit, 88, 79, 6, 12);
+    }
+    surface(flowerCenter, [[1, 0, 0], [0, 1, 0], [0, 0, 1]], [.22 * bud, .22 * bud, .16 * bud], 48, "center", orbit, 94, 83, 6, 14);
+  }
+
+  function drawScene(time, growth) {
+    if (!context || !columns || !rows) return;
+    depths.fill(Infinity);
+    glyphs.fill("");
+    colors.fill("");
+    context.clearRect(0, 0, width, height);
+
+    const orbit = userOrbit + (reducedMotion.matches ? 0 : time * .16);
+    let randomSeed = 9241;
+    for (let star = 0; star < 100; star += 1) {
+      randomSeed = (randomSeed * 16807) % 2147483647;
+      const rx = randomSeed / 2147483647;
+      randomSeed = (randomSeed * 16807) % 2147483647;
+      const ry = randomSeed / 2147483647;
+      const twinkle = Math.sin(time * 2 + star * 4) > .3;
+      plot([(rx - .5) * 12, 1.4 + ry * 7.2, -4.8], [0, 0, 1], twinkle ? 48 : 276, 80, 68, "star", orbit);
+    }
+
+    drawGround(orbit);
+    const seedScale = Math.max(.18, 1 - growth * .55);
+    surface([0, .19, 0], [[1, 0, 0], [0, 1, 0], [0, 0, 1]], [.3 * seedScale, .2 * seedScale, .22 * seedScale], 39, "center", orbit, 81, 80, 7, 16);
+    flowers.forEach((flower, index) => drawFlower(flower, index, growth, time, orbit));
+
+    for (let mote = 0; mote < 18; mote += 1) {
+      const angle = time * .45 + mote * Math.PI * 2 / 18;
+      const radius = 1.6 + (mote % 4) * .3;
+      const y = 1.2 + ((time * .32 + mote * .41) % 5.6);
+      const point = [Math.cos(angle) * radius, y, Math.sin(angle) * radius];
+      plot(point, [0, 1, 0], 35 + (mote % 3) * 48, 92, 82, "star", orbit);
+    }
+
+    context.font = `${fontSize}px "SFMono-Regular", Consolas, monospace`;
+    context.textBaseline = "top";
+    for (let row = 0; row < rows; row += 1) {
+      for (let column = 0; column < columns; column += 1) {
+        const index = row * columns + column;
+        if (!glyphs[index]) continue;
+        context.fillStyle = colors[index];
+        context.shadowBlur = fontSize * .32;
+        context.shadowColor = colors[index];
+        context.fillText(glyphs[index], offsetX + column * cellWidth, offsetY + row * lineHeight);
+      }
+    }
+    context.shadowBlur = 0;
+  }
+
+  function animate(now) {
+    if (!reducedMotion.matches && now - lastFrame < 33) {
+      frame = window.requestAnimationFrame(animate);
+      return;
+    }
+    lastFrame = now;
+    const time = (now - startedAt) / 1000;
+    const growth = reducedMotion.matches ? 1 : smooth(time / 8);
+    drawScene(time, growth);
+    status.textContent = growth < .25 ? "tohum toprağın altında uyanıyor"
+      : growth < .55 ? "gövdeler uzuyor, yapraklar açıyor"
+        : growth < 1 ? "tomurcuklar ışıkta açıyor"
+          : "çiçekler açtı / döndürmek için sürükle";
+    if (!reducedMotion.matches) frame = window.requestAnimationFrame(animate);
+  }
+
+  button.addEventListener("click", () => {
+    if (!context) return;
+    startedAt = performance.now();
+    lastFrame = 0;
+    window.cancelAnimationFrame(frame);
+    frame = window.requestAnimationFrame(animate);
+  });
+  canvas.addEventListener("pointerdown", event => {
+    dragX = event.clientX;
+    canvas.setPointerCapture(event.pointerId);
+  });
+  canvas.addEventListener("pointermove", event => {
+    if (dragX === null) return;
+    userOrbit += (event.clientX - dragX) * .009;
+    dragX = event.clientX;
+  });
+  canvas.addEventListener("pointerup", () => { dragX = null; });
+  canvas.addEventListener("pointercancel", () => { dragX = null; });
+
+  if (context) {
+    resize();
+    window.addEventListener("resize", resize);
+    if (typeof ResizeObserver !== "undefined") new ResizeObserver(resize).observe(canvas);
+    frame = window.requestAnimationFrame(animate);
+  }
+</script>
+</body>
+</html>
